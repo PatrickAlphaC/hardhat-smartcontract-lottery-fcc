@@ -7,7 +7,8 @@
     "test-staging": "hardhat test test/staging/APIConsumer_int_test.js --network kovan && hardhat test test/staging/RandomNumberConsumer_int_test.js --network kovan",
     "lint": "solhint 'contracts/*.sol'",
     "lint:fix": "solhint 'contracts/**/*.sol' --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "coverage": "hardhat coverage"
   },
   "license": "MIT",
   "devDependencies": {
@@ -32,6 +33,7 @@
     "@chainlink/contracts": "^0.4.0",
     "@chainlink/test-helpers": "^0.0.7-alpha",
     "@chainlink/token": "^1.1.0",
+    "@openzeppelin/contracts": "^4.5.0",
     "babel-eslint": "^10.1.0",
     "dotenv": "^10.0.0"
   },
