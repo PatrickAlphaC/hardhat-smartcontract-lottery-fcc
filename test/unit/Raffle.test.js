@@ -34,9 +34,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
 
           describe("enterRaffle", () => {
               it("reverts when you don't pay enough", async () => {
-                  await expect(raffle.enterRaffle()).to.be.revertedWith(
-                      "Not enough value sent to enter raffle"
-                  )
+                  await expect(raffle.enterRaffle()).to.be.revertedWith("Not enough value sent")
               })
               it("records player when they enter", async () => {
                   await raffle.enterRaffle({ value: raffleEntranceFee })
