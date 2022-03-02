@@ -176,4 +176,8 @@ contract Raffle is Ownable, VRFConsumerBaseV2, KeeperCompatibleInterface {
     function getEntranceFee() public view returns (uint256) {
         return s_entranceFee;
     }
+
+    function getNumberOfPlayers() public view returns (uint256) {
+        return s_players.length;
+    }
 }

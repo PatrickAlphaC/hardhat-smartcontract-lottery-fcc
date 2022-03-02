@@ -137,18 +137,15 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
               })
               // This test is too big...
               it("picks a winner, resets, and sends money", async () => {
-                  const player2 = accounts[2]
-                  const player3 = accounts[3]
-                  const player4 = accounts[4]
-                  raffle = raffleContract.connect(player2)
-                  await raffle.enterRaffle({ value: raffleEntranceFee })
-                  raffle = raffleContract.connect(player3)
-                  await raffle.enterRaffle({ value: raffleEntranceFee })
-                  raffle = raffleContract.connect(player4)
-                  await raffle.enterRaffle({ value: raffleEntranceFee })
-
+                  const additionalEntrances = 3
+                  const startingIndex = 2
+                  for (let i = startingIndex; i < startingIndex + additionalEntrances; i++) {
+                      raffle = raffleContract.connect(accounts[i])
+                      await raffle.enterRaffle({ value: raffleEntranceFee })
+                  }
                   const tx = await raffle.performUpkeep("0x")
                   const txReceipt = await tx.wait(1)
+                  const startingBalance = await accounts[2].getBalance()
                   await vrfCoordinatorV2Mock.fulfillRandomWords(
                       txReceipt.events[1].args.requestId,
                       raffle.address
@@ -156,9 +153,16 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                   // Now lets get the ending values...
                   const recentWinner = await raffle.getRecentWinner()
                   const raffleState = await raffle.getRaffleState()
+                  const winnerBalance = await accounts[2].getBalance()
                   await expect(raffle.getPlayer(0)).to.be.reverted
-                  assert.equal(recentWinner.toString(), player2.address)
+                  assert.equal(recentWinner.toString(), accounts[2].address)
                   assert.equal(raffleState, 0)
+                  assert.equal(
+                      winnerBalance.toString(),
+                      startingBalance
+                          .add(raffleEntranceFee.mul(additionalEntrances).add(raffleEntranceFee))
+                          .toString()
+                  )
               })
           })
       })
