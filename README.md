@@ -85,7 +85,7 @@ yarn hardhat test
 or
 
 ```
-npx hardhat test
+yarn hardhat test
 ```
 
 ### Typescript
