@@ -34,7 +34,9 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
 
           describe("enterRaffle", () => {
               it("reverts when you don't pay enough", async () => {
-                  await expect(raffle.enterRaffle()).to.be.revertedWith("Not enough value sent")
+                  await expect(raffle.enterRaffle()).to.be.revertedWith(
+                      "Raffle__SendMoreToEnterRaffle"
+                  )
               })
               it("records player when they enter", async () => {
                   await raffle.enterRaffle({ value: raffleEntranceFee })
@@ -59,7 +61,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                   // we pretend to be a keeper for a second
                   await raffle.performUpkeep([])
                   await expect(raffle.enterRaffle({ value: raffleEntranceFee })).to.be.revertedWith(
-                      "Raffle is not open"
+                      "Raffle__RaffleNotOpen"
                   )
               })
           })
@@ -103,22 +105,21 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                   assert(tx)
               })
               it("reverts if checkup is false", async () => {
-                  await expect(raffle.performUpkeep("0x")).to.be.revertedWith("Upkeep not needed")
+                  await expect(raffle.performUpkeep("0x")).to.be.revertedWith(
+                      "Raffle__UpkeepNotNeeded"
+                  )
               })
-              it("updates the raffle state, latest timestamp, and emits a requestId", async () => {
+              it("updates the raffle state and emits a requestId", async () => {
                   // Too many asserts in this test!
                   await raffle.enterRaffle({ value: raffleEntranceFee })
                   await network.provider.send("evm_increaseTime", [interval.toNumber() + 1])
                   await network.provider.request({ method: "evm_mine", params: [] })
-                  const startingTimeStamp = await raffle.getLastTimeStamp()
                   const txResponse = await raffle.performUpkeep("0x")
                   const txReceipt = await txResponse.wait(1)
-                  const endingTimeStamp = await raffle.getLastTimeStamp()
                   const raffleState = await raffle.getRaffleState()
                   const requestId = txReceipt.events[1].args.requestId
                   assert(requestId.toNumber() > 0)
                   assert(raffleState == 1)
-                  assert(endingTimeStamp > startingTimeStamp)
               })
           })
           describe("fulfillRandomWords", () => {
@@ -143,6 +144,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                       raffle = raffleContract.connect(accounts[i])
                       await raffle.enterRaffle({ value: raffleEntranceFee })
                   }
+                  const startingTimeStamp = await raffle.getLastTimeStamp()
                   const tx = await raffle.performUpkeep("0x")
                   const txReceipt = await tx.wait(1)
                   const startingBalance = await accounts[2].getBalance()
@@ -154,6 +156,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                   const recentWinner = await raffle.getRecentWinner()
                   const raffleState = await raffle.getRaffleState()
                   const winnerBalance = await accounts[2].getBalance()
+                  const endingTimeStamp = await raffle.getLastTimeStamp()
                   await expect(raffle.getPlayer(0)).to.be.reverted
                   assert.equal(recentWinner.toString(), accounts[2].address)
                   assert.equal(raffleState, 0)
@@ -163,6 +166,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                           .add(raffleEntranceFee.mul(additionalEntrances).add(raffleEntranceFee))
                           .toString()
                   )
+                  assert(endingTimeStamp > startingTimeStamp)
               })
           })
       })
