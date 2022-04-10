@@ -8,7 +8,10 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 import "hardhat/console.sol";
 
-// error UpkeepNotNeeded(uint256 currentBalance, uint256 numPlayers, RaffleState raffleState);
+error Raffle__UpkeepNotNeeded(uint256 currentBalance, uint256 numPlayers, uint256 raffleState);
+error Raffle__TransferFailed();
+error Raffle__SendMoreToEnterRaffle();
+error Raffle__RaffleNotOpen();
 
 /**@title A sample Raffle Contract
  * @author Patrick Collins
@@ -63,16 +66,17 @@ contract Raffle is Ownable, VRFConsumerBaseV2, KeeperCompatibleInterface {
     }
 
     function enterRaffle() public payable {
-        require(msg.value >= s_entranceFee, "Not enough value sent");
-        require(s_raffleState == RaffleState.OPEN, "Raffle is not open");
+        // require(msg.value >= s_entranceFee, "Not enough value sent");
+        // require(s_raffleState == RaffleState.OPEN, "Raffle is not open");
+        if (msg.value < s_entranceFee) {
+            revert Raffle__SendMoreToEnterRaffle();
+        }
+        if (s_raffleState != RaffleState.OPEN) {
+            revert Raffle__RaffleNotOpen();
+        }
         s_players.push(payable(msg.sender));
         emit RaffleEnter(msg.sender);
     }
-
-    // receive() external payable {}
-    // fallback() external {}
-    // selfdestruct on upgradeable smart contracts
-    // super somewhere...
 
     /**
      * @dev This is the function that the Chainlink Keeper nodes call
@@ -110,8 +114,14 @@ contract Raffle is Ownable, VRFConsumerBaseV2, KeeperCompatibleInterface {
         bytes calldata /* performData */
     ) external override {
         (bool upkeepNeeded, ) = checkUpkeep("");
-        require(upkeepNeeded, "Upkeep not needed");
-        // if (!upkeepNeeded) {revert UpkeepNotNeeded({address(this).balance, s_players.length, s_raffleState});}
+        // require(upkeepNeeded, "Upkeep not needed");
+        if (!upkeepNeeded) {
+            revert Raffle__UpkeepNotNeeded(
+                address(this).balance,
+                s_players.length,
+                uint256(s_raffleState)
+            );
+        }
         s_lastTimeStamp = block.timestamp;
         s_raffleState = RaffleState.CALCULATING;
         uint256 requestId = i_vrfCoordinator.requestRandomWords(
@@ -139,7 +149,10 @@ contract Raffle is Ownable, VRFConsumerBaseV2, KeeperCompatibleInterface {
         s_players = new address payable[](0);
         s_raffleState = RaffleState.OPEN;
         (bool success, ) = recentWinner.call{value: address(this).balance}("");
-        require(success, "Transfer failed");
+        // require(success, "Transfer failed");
+        if (!success) {
+            revert Raffle__TransferFailed();
+        }
         emit WinnerPicked(recentWinner);
     }
 
