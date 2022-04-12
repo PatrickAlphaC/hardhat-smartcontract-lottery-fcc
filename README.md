@@ -1,40 +1,31 @@
-- [Chainlink Hardhat Box](#chainlink-hardhat-box)
+# Hardhat Smartcontract Lottery (Raffle) FCC
+
+This is a section of the Javascript Blockchain/Smart Contract FreeCodeCamp Course.
+
+Video Coming soon...
+
+[Full Repo](https://github.com/smartcontractkit/full-blockchain-solidity-course-js)
+
+- [Hardhat Smartcontract Lottery (Raffle) FCC](#hardhat-smartcontract-lottery-raffle-fcc)
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
   - [Quickstart](#quickstart)
-    - [Typescript](#typescript)
+  - [Typescript](#typescript)
 - [Useage](#useage)
-  - [Deploying Contracts](#deploying-contracts)
-  - [Run a Local Network](#run-a-local-network)
-  - [Using a Testnet or Live Network (like Mainnet or Polygon)](#using-a-testnet-or-live-network-like-mainnet-or-polygon)
-    - [Kovan Ethereum Testnet Setup](#kovan-ethereum-testnet-setup)
-  - [Forking](#forking)
-  - [Auto-Funding](#auto-funding)
-- [Test](#test)
-- [Interacting with Deployed Contracts](#interacting-with-deployed-contracts)
-  - [Chainlink Price Feeds](#chainlink-price-feeds)
-  - [Request & Receive Data](#request--receive-data)
-  - [VRF Get a random number](#vrf-get-a-random-number)
-  - [Keepers](#keepers)
-  - [Verify on Etherscan](#verify-on-etherscan)
-- [View Contracts Size](#view-contracts-size)
+  - [Testing](#testing)
+    - [Test Coverage](#test-coverage)
+- [Deployment to a testnet or mainnet](#deployment-to-a-testnet-or-mainnet)
+    - [Estimate gas cost in USD](#estimate-gas-cost-in-usd)
+  - [Verify on etherscan](#verify-on-etherscan)
+    - [Typescript differences](#typescript-differences)
 - [Linting](#linting)
-- [Code Formating](#code-formating)
-- [Estimaging Gas](#estimaging-gas)
-- [Contributing](#contributing)
-- [Thank You!](#thank-you)
-  - [Resources](#resources)
+- [Thank you!](#thank-you)
 
-# Chainlink Hardhat Box
- Implementation of the following 4 Chainlink features using the [Hardhat](https://hardhat.org/) development environment:
- - [Chainlink Price Feeds](https://docs.chain.link/docs/using-chainlink-reference-contracts)
- - [Chainlink VRF](https://docs.chain.link/docs/chainlink-vrf)
- - [Chainlink Keepers](https://docs.chain.link/docs/chainlink-keepers/introduction/)
- - [Request & Receive data](https://docs.chain.link/docs/request-and-receive-data)
+This project is apart of the Hardhat FreeCodeCamp video.
 
-# Getting Started 
+Video coming soon...
 
-It's recommended that you've gone through the [hardhat getting started documentation](https://hardhat.org/getting-started/) before proceeding here. 
+# Getting Started
 
 ## Requirements
 
@@ -42,309 +33,153 @@ It's recommended that you've gone through the [hardhat getting started documenta
   - You'll know you did it right if you can run `git --version` and you see a response like `git version x.x.x`
 - [Nodejs](https://nodejs.org/en/)
   - You'll know you've installed nodejs right if you can run:
-    - `node --version`and get an ouput like: `vx.x.x`
-- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/) instead of `npm`
+    - `node --version` and get an ouput like: `vx.x.x`
+- [Yarn](https://yarnpkg.com/getting-started/install) instead of `npm`
   - You'll know you've installed yarn right if you can run:
-    - `yarn --version` And get an output like: `x.x.x`
-    - You might need to install it with npm
+    - `yarn --version` and get an output like: `x.x.x`
+    - You might need to [install it with `npm`](https://classic.yarnpkg.com/lang/en/docs/install/) or `corepack`
 
 ## Quickstart
 
-1. Clone and install dependencies
-
-After installing all the requirements, run the following:
-
-```bash
-git clone https://github.com/smartcontractkit/hardhat-starter-kit/
-cd hardhat-starter-kit
 ```
-Then:
-```
+git clone --branch typescript https://github.com/PatrickAlphaC/hardhat-fund-me-fcc
+cd hardhat-fund-me-fcc
 yarn
+yarn typechain
 ```
 
-or
-```
-npm i
-```
+## Typescript
 
-2. You can now do stuff!
-
-```
-yarn hardhat test
-```
-
-or
-
-```
-yarn hardhat test
-```
-
-### Typescript
-
-To use typescript, run:
+If you want to get to typescript and you cloned the javascript version, just run:
 
 ```
 git checkout typescript
-yarn
 ```
 
 # Useage
 
-If you run `yarn hardhat --help` you'll get an output of all the tasks you can run. 
-
-## Deploying Contracts
+Deploy:
 
 ```
 yarn hardhat deploy
 ```
 
-This will deploy your contracts to a local network. Additionally, if on a local network, it will deploy mock Chainlink contracts for you to interact with. If you'd like to interact with your deployed contracts, skip down to [Interacting with Deployed Contracts](#interacting-with-deployed-contracts).
+## Testing
 
-## Run a Local Network
-
-One of the best ways to test and interact with smart contracts is with a local network. To run a local network with all your contracts in it, run the following:
-
-```
-yarn hardhat node
-```
-
-You'll get a local blockchain, private keys, contracts deployed (from the `deploy` folder scripts), and an endpoint to potentially add to an EVM wallet. 
-
-## Using a Testnet or Live Network (like Mainnet or Polygon)
-
-In your `hardhat.config.js` you'll see section like:
-
-```
-module.exports = {
-  defaultNetwork: "hardhat",
-  networks: {
-```
-
-This section of the file is where you define which networks you want to interact with. You can read more about that whole file in the [hardhat documentation.](https://hardhat.org/config/)
-
-To interact with a live or test network, you'll need:
-
-1. An rpc URL 
-2. A Private Key
-3. ETH & LINK token (either testnet or real)
-
-Let's look at an example of setting these up using the Kovan testnet. 
-
-### Kovan Ethereum Testnet Setup
-
-First, we will need to set environment variables. We can do so by setting them in our `.env` file (create it if it's not there). You can also read more about [environment variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) from the linked twilio blog. You'll find a sample of what this file will look like in `.env.example`
-
-> IMPORTANT: MAKE SURE YOU'D DONT EXPOSE THE KEYS YOU PUT IN THIS `.env` FILE. By that, I mean don't push them to a public repo, and please try to keep them keys you use in development not associated with any real funds. 
-
-1. Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html)
-
-You can get one for free from [Alchmey](https://www.alchemy.com/), [Infura](https://infura.io/), or [Moralis](https://moralis.io/speedy-nodes/). This is your connection to the blockchain. 
-
-2. Set your `PRIVATE_KEY` environment variable. 
-
-This is your private key from your wallet, ie [MetaMask](https://metamask.io/). This is needed for deploying contracts to public networks. You can optionally set your `MNEMONIC` environment variable instead with some changes to the `hardhat.config.js`.
-
-![WARNING](https://via.placeholder.com/15/f03c15/000000?text=+) **WARNING** ![WARNING](https://via.placeholder.com/15/f03c15/000000?text=+)
-
-When developing, it's best practice to use a Metamask that isn't associated with any real money. A good way to do this is to make a new browser profile (on Chrome, Brave, Firefox, etc) and install Metamask on that brower, and never send this wallet money.  
-
-Don't commit and push any changes to .env files that may contain sensitive information, such as a private key! If this information reaches a public GitHub repository, someone can use it to check if you have any Mainnet funds in that wallet address, and steal them!
-
-`.env` example:
-```
-KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
-PRIVATE_KEY='abcdef'
-```
-`bash` example
-```
-export KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
-export PRIVATE_KEY='abcdef'
-```
-
-> You can also use a `MNEMONIC` instead of a `PRIVATE_KEY` environment variable by uncommenting the section in the `hardhat.config.js`, and commenting out the `PRIVATE_KEY` line. However this is not recommended. 
-
-For other networks like mainnet and polygon, you can use different environment variables for your RPC URL and your private key. See the `hardhat.config.js` to learn more. 
-
-3. Get some Kovan Testnet ETH and LINK 
-
-Head over to the [Chainlink faucets](https://faucets.chain.link/) and get some ETH and LINK. Please follow [the chainlink documentation](https://docs.chain.link/docs/acquire-link/) if unfamiliar. 
-
-4. Running commands
-
-You should now be all setup! You can run any command and just pass the `--network kovan` now!
-
-To deploy contracts:
-
-```
-yarn hardhat deploy --network kovan
-```
-
-To run staging testnet tests
-```
-yarn hardhat test --network kovan
-```
-
-## Forking 
- 
-If you'd like to run tests or on a network that is a [forked network](https://hardhat.org/hardhat-network/guides/mainnet-forking.html)
-1. Set a `MAINNET_RPC_URL` environment variable that connects to the mainnet.
-2. Uncomment the section in your `hardhat.config.js`
-```
-      // forking: {
-      //   url: MAINNET_RPC_URL
-      // }
-```
-
-
-## Auto-Funding
-
-This Starter Kit is configured by default to attempt to auto-fund any newly deployed contract that uses Any-API or Chainlink VRF, to save having to manually fund them after each deployment. The amount in LINK to send as part of this process can be modified in the [Starter Kit Config](helper-hardhat-config.js), and are configurable per network.
-
-| Parameter  | Description                                       | Default Value |
-| ---------- | :------------------------------------------------ | :------------ |
-| fundAmount | Amount of LINK to transfer when funding contracts | 0.1 LINK      |
-
-If you wish to deploy the smart contracts without performing the auto-funding, add an `AUTO_FUND` environment variable, and set it to false. 
-
-
-# Test
-Tests are located in the [test](./test/) directory, and are split between unit tests and staging/testnet tests. Unit tests should only be run on local environments, and staging tests should only run on live environments.
-
-To run unit tests:
-
-```bash
-yarn test
-```
-Or
 ```
 yarn hardhat test
 ```
 
-To run integration tests:
-
-```bash
-yarn test-integration
-```
-
-or
+### Test Coverage
 
 ```
-yarn hardhat test --network kovan
-```
-
-# Interacting with Deployed Contracts
-
-After deploying your contracts. 
-The deployment output will give you the contract addresses as they are deployed. You can then use these contract addresses in conjunction with Hardhat tasks to perform operations on each contract.
-
-
-## Chainlink Price Feeds
-The Price Feeds consumer contract has one task, to read the latest price of a specified price feed contract
-
-```bash
-yarn hardhat read-price-feed --contract insert-contract-address-here --network network
-```
-
-## Request & Receive Data
-The APIConsumer contract has two tasks, one to request external data based on a set of parameters, and one to check to see what the result of the data request is. This contract needs to be funded with link first:
-
-```bash
-yarn hardhat fund-link --contract insert-contract-address-here --network network
-```
-
-Once it's funded, you can request external data by passing in a number of parameters to the request-data task. The contract parameter is mandatory, the rest are optional
-
-```bash
-yarn hardhat request-data --contract insert-contract-address-here --network network
-```
-
-Once you have successfully made a request for external data, you can see the result via the read-data task
-```bash
-yarn hardhat read-data --contract insert-contract-address-here --network network
+yarn hardhat coverage
 ```
 
 
-## VRF Get a random number
-The VRFConsumer contract has two tasks, one to request a random number, and one to read the result of the random number request. This contract needs to be funded with link first:
 
-```bash
-yarn hardhat fund-link --contract insert-contract-address-here --network network
+# Deployment to a testnet or mainnet
+
+1. Setup environment variabltes
+
+You'll want to set your `RINKEBY_RPC_URL` and `PRIVATE_KEY` as environment variables. You can add them to a `.env` file, similar to what you see in `.env.example`.
+
+- `PRIVATE_KEY`: The private key of your account (like from [metamask](https://metamask.io/)). **NOTE:** FOR DEVELOPMENT, PLEASE USE A KEY THAT DOESN'T HAVE ANY REAL FUNDS ASSOCIATED WITH IT.
+  - You can [learn how to export it here](https://metamask.zendesk.com/hc/en-us/articles/360015289632-How-to-Export-an-Account-Private-Key).
+- `RINKEBY_RPC_URL`: This is url of the rinkeby testnet node you're working with. You can get setup with one for free from [Alchemy](https://alchemy.com/?a=673c802981)
+
+2. Get testnet ETH
+
+Head over to [faucets.chain.link](https://faucets.chain.link/) and get some tesnet ETH & LINK. You should see the ETH and LINK show up in your metamask. [You can read more on setting up your wallet with LINK.](https://docs.chain.link/docs/deploy-your-first-contract/#install-and-fund-your-metamask-wallet)
+
+3. Setup a Chainlink VRF Subscription ID
+
+Head over to [vrf.chain.link](https://vrf.chain.link/) and setup a new subscription, and get a subscriptionId. You can reuse an old subscription if you already have one. 
+
+[You can follow the instructions](https://docs.chain.link/docs/get-a-random-number/) if you get lost. You should leave this step with:
+
+1. A subscription ID
+2. Your subscription should be funded with LINK
+
+3. Deploy
+
+In your `helper-hardhat-config.js` add your `subscriptionId` under the section of the chainId you're using (aka, if you're deploying to rinkeby, add your `subscriptionId` in the `subscriptionId` field under the `4` section.)
+
+Then run:
+```
+yarn hardhat deploy --network rinkeby
 ```
 
-Once it's funded, you can perform a VRF request with the request-random-number task:
+And copy / remember the contract address. 
 
-```bash
-yarn hardhat request-random-number --contract insert-contract-address-here --network network
-```
+4. Add your contract address as a Chainlink VRF Consumer
 
-Once you have successfully made a request for a random number, you can see the result via the read-random-number task:
+Go back to [vrf.chain.link](https://vrf.chain.link) and under your subscription add `Add consumer` and add your contract address. You should also fund the contract with a minimum of 1 LINK. 
 
-```bash
-yarn hardhat read-random-number --contract insert-contract-address-here --network network
-```
+5. Register a Chainlink Keepers Upkeep
 
-## Keepers
-The KeepersCounter contract is a simple Chainlink Keepers enabled contract that simply maintains a counter variable that gets incremented each time the performUpkeep task is performed by a Chainlink Keeper. Once the contract is deployed, you should head to [https://keepers.chain.link/](https://keepers.chain.link/) to register it for upkeeps, then you can use the task below to view the counter variable that gets incremeneted by Chainlink Keepers
+[You can follow the documentation if you get lost.](https://docs.chain.link/docs/chainlink-keepers/compatible-contracts/)
 
+Go to [keepers.chain.link](https://keepers.chain.link/new) and register a new upkeep. Your UI will look something like this once completed:
 
-```bash
-yarn hardhat read-keepers-counter --contract insert-contract-address-here --network network
-```
+![Keepers](./img/keepers.png)
 
-## Verify on Etherscan
+6. Enter your raffle!
 
-You'll need an `ETHERSCAN_API_KEY` environment variable. You can get one from the [Etherscan API site.](https://etherscan.io/apis). If you have it set, your deploy script will try to verify them by default, but if you want to verify any manually, you can run: 
+You're contract is now setup to be a tamper proof autonomous verifiably random lottery. Enter the lottery by running:
 
 ```
-yarn hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
-```
-example:
-
-```
-yarn hardhat verify --network kovan 0x9279791897f112a41FfDa267ff7DbBC46b96c296 "0x9326BFA02ADD2366b30bacB125260Af641031331"
+yarn hardhat run scripts/enter.js --network rinkeby
 ```
 
-# View Contracts Size
+### Estimate gas cost in USD
+
+To get a USD estimation of gas cost, you'll need a `COINMARKETCAP_API_KEY` environment variable. You can get one for free from [CoinMarketCap](https://pro.coinmarketcap.com/signup). 
+
+Then, uncomment the line `coinmarketcap: COINMARKETCAP_API_KEY,` in `hardhat.config.js` to get the USD estimation. Just note, everytime you run your tests it will use an API call, so it might make sense to have using coinmarketcap disabled until you need it. You can disable it by just commenting the line back out. 
+
+
+
+## Verify on etherscan
+
+If you deploy to a testnet or mainnet, you can verify it if you get an [API Key](https://etherscan.io/myapikey) from Etherscan and set it as an environemnt variable named `ETHERSCAN_API_KEY`. You can pop it into your `.env` file as seen in the `.env.example`.
+
+In it's current state, if you have your api key set, it will auto verify kovan contracts!
+
+However, you can manual verify with:
 
 ```
-yarn run hardhat size-contracts
+yarn hardhat verify --constructor-args arguments.js DEPLOYED_CONTRACT_ADDRESS
 ```
+
+### Typescript differences
+1. `.js` files are now `.ts`
+2. We added a bunch of typescript and typing packages to our `package.json`. They can be installed with:
+   1. `yarn add @typechain/ethers-v5 @typechain/hardhat @types/chai @types/node ts-node typechain typescript`
+3. The biggest one being [typechain](https://github.com/dethcrypto/TypeChain)
+   1. This gives your contracts static typing, meaning you'll always know exactly what functions a contract can call. 
+   2. This gives us `factories` that are specific to the contracts they are factories of. See the tests folder for a version of how this is implemented. 
+4. We use `imports` instead of `require`. Confusing to you? [Watch this video](https://www.youtube.com/watch?v=mK54Cn4ceac)
+5. Add `tsconfig.json`
 
 # Linting
 
-This will [lint](https://stackoverflow.com/questions/8503559/what-is-linting) your smart contracts.  
-
+To check linting / code formatting:
+```
+yarn lint
+```
+or, to fix: 
 ```
 yarn lint:fix
 ```
 
-# Code Formating
+# Thank you!
 
-This will format both your javascript and solidity to look nicer. 
+If you appreciated this, feel free to follow me or donate!
 
-```
-yarn format
-```
+ETH/Polygon/Avalanche/etc Address: 0x9680201d9c93d65a3603d2088d125e955c73BD65
 
-# Estimaging Gas
-
-To estimate gas, just set a `REPORT_GAS` environment variable to true, and then run:
-
-```
-yarn hardhat test
-```
-
-If you'd like to see the gas prices in USD or other currency, add a `COINMARKETCAP_API_KEY` from [Coinmarketcap](https://coinmarketcap.com/api/documentation/v1/).
-
-
-# Contributing
-
-Contributions are always welcome! Open a PR or an issue!
-
-# Thank You!
-
-## Resources
-
-- [Chainlink Documentation](https://docs.chain.link/)
-- [Hardhat Documentation](https://hardhat.org/getting-started/)
+[![Patrick Collins Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/PatrickAlphaC)
+[![Patrick Collins YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/channel/UCn-3f8tw_E1jZvhuHatROwA)
+[![Patrick Collins Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/patrickalphac/)
+[![Patrick Collins Medium](https://img.shields.io/badge/Medium-000000?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@patrick.collins_58673/)
