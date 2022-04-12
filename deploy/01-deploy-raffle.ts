@@ -1,17 +1,24 @@
-const { getNamedAccounts, deployments, network, run } = require("hardhat")
-const {
+import { getNamedAccounts, deployments, network, run }  from "hardhat"
+import {DeployFunction} from "hardhat-deploy/types"
+import {HardhatRuntimeEnvironment} from "hardhat/types"
+
+import {
     networkConfig,
     developmentChains,
     VERIFICATION_BLOCK_CONFIRMATIONS,
-} = require("../helper-hardhat-config")
-const { verify } = require("../helper-functions")
+}  from "../helper-hardhat-config"
+import verify from "../utils/verify"
 
 const FUND_AMOUNT = "1000000000000000000000"
 
-module.exports = async ({ getNamedAccounts, deployments }) => {
+const deployRaffle: DeployFunction = async function (
+    hre: HardhatRuntimeEnvironment
+  ) {
+    const { deployments, getNamedAccounts, network, ethers } = hre
     const { deploy, log } = deployments
     const { deployer } = await getNamedAccounts()
-    const chainId = network.config.chainId
+    // const chainId = network.config.chainId
+    const chainId = 31337
     let vrfCoordinatorV2Address, subscriptionId
 
     if (chainId == 31337) {
@@ -33,7 +40,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         : VERIFICATION_BLOCK_CONFIRMATIONS
 
     log("----------------------------------------------------")
-    arguments = [
+    const args: any[] = [
         vrfCoordinatorV2Address,
         subscriptionId,
         networkConfig[chainId]["gasLane"],
@@ -43,7 +50,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     ]
     const raffle = await deploy("Raffle", {
         from: deployer,
-        args: arguments,
+        args: args,
         log: true,
         waitConfirmations: waitBlockConfirmations,
     })
@@ -51,7 +58,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     // Verify the deployment
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
         log("Verifying...")
-        await verify(raffle.address, arguments)
+        await verify(raffle.address, args)
     }
 
     log("Run Price Feed contract with command:")
@@ -59,5 +66,5 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     log(`yarn hardhat run scripts/enterRaffle.js --network ${networkName}`)
     log("----------------------------------------------------")
 }
-
-module.exports.tags = ["all", "raffle"]
+export default deployRaffle
+deployRaffle.tags = ["all", "raffle"]
