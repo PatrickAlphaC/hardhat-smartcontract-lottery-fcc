@@ -32,8 +32,8 @@ const deployRaffle: DeployFunction = async function (
         // Our mock makes it so we don't actually have to worry about sending fund
         await vrfCoordinatorV2Mock.fundSubscription(subscriptionId, FUND_AMOUNT)
     } else {
-        vrfCoordinatorV2Address = networkConfig[chainId]["vrfCoordinatorV2"]
-        subscriptionId = networkConfig[chainId]["subscriptionId"]
+        vrfCoordinatorV2Address = networkConfig[network.config.chainId!]["vrfCoordinatorV2"]
+        subscriptionId = networkConfig[network.config.chainId!]["subscriptionId"]
     }
     const waitBlockConfirmations = developmentChains.includes(network.name)
         ? 1
@@ -43,10 +43,10 @@ const deployRaffle: DeployFunction = async function (
     const args: any[] = [
         vrfCoordinatorV2Address,
         subscriptionId,
-        networkConfig[chainId]["gasLane"],
-        networkConfig[chainId]["keepersUpdateInterval"],
-        networkConfig[chainId]["raffleEntranceFee"],
-        networkConfig[chainId]["callbackGasLimit"],
+        networkConfig[network.config.chainId!]["gasLane"],
+        networkConfig[network.config.chainId!]["keepersUpdateInterval"],
+        networkConfig[network.config.chainId!]["raffleEntranceFee"],
+        networkConfig[network.config.chainId!]["callbackGasLimit"],
     ]
     const raffle = await deploy("Raffle", {
         from: deployer,

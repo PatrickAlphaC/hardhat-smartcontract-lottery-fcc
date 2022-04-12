@@ -14,11 +14,11 @@ const updateUI: DeployFunction = async function (
         const fundMe = await ethers.getContract("Raffle")
         const contractAddresses = JSON.parse(fs.readFileSync(frontEndContractsFile, "utf8"))
         if (chainId in contractAddresses) {
-            if (!contractAddresses[chainId].includes(fundMe.address)) {
-                contractAddresses[chainId].push(fundMe.address)
+            if (!contractAddresses[network.config.chainId!].includes(fundMe.address)) {
+                contractAddresses[network.config.chainId!].push(fundMe.address)
             }
         } else {
-            contractAddresses[chainId] = [fundMe.address]
+            contractAddresses[network.config.chainId!] = [fundMe.address]
         }
         fs.writeFileSync(frontEndContractsFile, JSON.stringify(contractAddresses))
         console.log("Front end written!")
