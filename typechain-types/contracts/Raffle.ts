@@ -35,15 +35,13 @@ export interface RaffleInterface extends utils.Interface {
     "getInterval()": FunctionFragment;
     "getLastTimeStamp()": FunctionFragment;
     "getNumWords()": FunctionFragment;
+    "getNumberOfPlayers()": FunctionFragment;
     "getPlayer(uint256)": FunctionFragment;
     "getRaffleState()": FunctionFragment;
     "getRecentWinner()": FunctionFragment;
     "getRequestConfirmations()": FunctionFragment;
-    "owner()": FunctionFragment;
     "performUpkeep(bytes)": FunctionFragment;
     "rawFulfillRandomWords(uint256,uint256[])": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
   };
 
   getFunction(
@@ -54,15 +52,13 @@ export interface RaffleInterface extends utils.Interface {
       | "getInterval"
       | "getLastTimeStamp"
       | "getNumWords"
+      | "getNumberOfPlayers"
       | "getPlayer"
       | "getRaffleState"
       | "getRecentWinner"
       | "getRequestConfirmations"
-      | "owner"
       | "performUpkeep"
       | "rawFulfillRandomWords"
-      | "renounceOwnership"
-      | "transferOwnership"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -90,6 +86,10 @@ export interface RaffleInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "getNumberOfPlayers",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "getPlayer",
     values: [BigNumberish]
   ): string;
@@ -105,7 +105,6 @@ export interface RaffleInterface extends utils.Interface {
     functionFragment: "getRequestConfirmations",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "performUpkeep",
     values: [BytesLike]
@@ -113,14 +112,6 @@ export interface RaffleInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "rawFulfillRandomWords",
     values: [BigNumberish, BigNumberish[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
   ): string;
 
   decodeFunctionResult(
@@ -147,6 +138,10 @@ export interface RaffleInterface extends utils.Interface {
     functionFragment: "getNumWords",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getNumberOfPlayers",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getPlayer", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getRaffleState",
@@ -160,7 +155,6 @@ export interface RaffleInterface extends utils.Interface {
     functionFragment: "getRequestConfirmations",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "performUpkeep",
     data: BytesLike
@@ -169,39 +163,17 @@ export interface RaffleInterface extends utils.Interface {
     functionFragment: "rawFulfillRandomWords",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
 
   events: {
-    "OwnershipTransferred(address,address)": EventFragment;
     "RaffleEnter(address)": EventFragment;
     "RequestedRaffleWinner(uint256)": EventFragment;
     "WinnerPicked(address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RaffleEnter"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RequestedRaffleWinner"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "WinnerPicked"): EventFragment;
 }
-
-export interface OwnershipTransferredEventObject {
-  previousOwner: string;
-  newOwner: string;
-}
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
-
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface RaffleEnterEventObject {
   player: string;
@@ -272,6 +244,8 @@ export interface Raffle extends BaseContract {
 
     getNumWords(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    getNumberOfPlayers(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     getPlayer(
       index: BigNumberish,
       overrides?: CallOverrides
@@ -283,8 +257,6 @@ export interface Raffle extends BaseContract {
 
     getRequestConfirmations(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
-
     performUpkeep(
       arg0: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -293,15 +265,6 @@ export interface Raffle extends BaseContract {
     rawFulfillRandomWords(
       requestId: BigNumberish,
       randomWords: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    transferOwnership(
-      newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
@@ -323,6 +286,8 @@ export interface Raffle extends BaseContract {
 
   getNumWords(overrides?: CallOverrides): Promise<BigNumber>;
 
+  getNumberOfPlayers(overrides?: CallOverrides): Promise<BigNumber>;
+
   getPlayer(index: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   getRaffleState(overrides?: CallOverrides): Promise<number>;
@@ -330,8 +295,6 @@ export interface Raffle extends BaseContract {
   getRecentWinner(overrides?: CallOverrides): Promise<string>;
 
   getRequestConfirmations(overrides?: CallOverrides): Promise<BigNumber>;
-
-  owner(overrides?: CallOverrides): Promise<string>;
 
   performUpkeep(
     arg0: BytesLike,
@@ -341,15 +304,6 @@ export interface Raffle extends BaseContract {
   rawFulfillRandomWords(
     requestId: BigNumberish,
     randomWords: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  transferOwnership(
-    newOwner: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -369,6 +323,8 @@ export interface Raffle extends BaseContract {
 
     getNumWords(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getNumberOfPlayers(overrides?: CallOverrides): Promise<BigNumber>;
+
     getPlayer(index: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     getRaffleState(overrides?: CallOverrides): Promise<number>;
@@ -377,8 +333,6 @@ export interface Raffle extends BaseContract {
 
     getRequestConfirmations(overrides?: CallOverrides): Promise<BigNumber>;
 
-    owner(overrides?: CallOverrides): Promise<string>;
-
     performUpkeep(arg0: BytesLike, overrides?: CallOverrides): Promise<void>;
 
     rawFulfillRandomWords(
@@ -386,25 +340,9 @@ export interface Raffle extends BaseContract {
       randomWords: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
-
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
   };
 
   filters: {
-    "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
-    ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
-    ): OwnershipTransferredEventFilter;
-
     "RaffleEnter(address)"(player?: string | null): RaffleEnterEventFilter;
     RaffleEnter(player?: string | null): RaffleEnterEventFilter;
 
@@ -434,6 +372,8 @@ export interface Raffle extends BaseContract {
 
     getNumWords(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getNumberOfPlayers(overrides?: CallOverrides): Promise<BigNumber>;
+
     getPlayer(
       index: BigNumberish,
       overrides?: CallOverrides
@@ -445,8 +385,6 @@ export interface Raffle extends BaseContract {
 
     getRequestConfirmations(overrides?: CallOverrides): Promise<BigNumber>;
 
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
     performUpkeep(
       arg0: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -455,15 +393,6 @@ export interface Raffle extends BaseContract {
     rawFulfillRandomWords(
       requestId: BigNumberish,
       randomWords: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    transferOwnership(
-      newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
@@ -486,6 +415,10 @@ export interface Raffle extends BaseContract {
 
     getNumWords(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    getNumberOfPlayers(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getPlayer(
       index: BigNumberish,
       overrides?: CallOverrides
@@ -499,8 +432,6 @@ export interface Raffle extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     performUpkeep(
       arg0: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -509,15 +440,6 @@ export interface Raffle extends BaseContract {
     rawFulfillRandomWords(
       requestId: BigNumberish,
       randomWords: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    transferOwnership(
-      newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

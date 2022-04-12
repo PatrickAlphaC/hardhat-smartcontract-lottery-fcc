@@ -1,21 +1,23 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.8;
+pragma solidity ^0.8.7;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 import "hardhat/console.sol";
 
-// error UpkeepNotNeeded(uint256 currentBalance, uint256 numPlayers, RaffleState raffleState);
+error Raffle__UpkeepNotNeeded(uint256 currentBalance, uint256 numPlayers, uint256 raffleState);
+error Raffle__TransferFailed();
+error Raffle__SendMoreToEnterRaffle();
+error Raffle__RaffleNotOpen();
 
 /**@title A sample Raffle Contract
  * @author Patrick Collins
  * @notice This contract is for creating a sample raffle contract
  * @dev This implements the Chainlink VRF Version 2
  */
-contract Raffle is Ownable, VRFConsumerBaseV2, KeeperCompatibleInterface {
+contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     /* Type declarations */
     enum RaffleState {
         OPEN,
@@ -34,7 +36,7 @@ contract Raffle is Ownable, VRFConsumerBaseV2, KeeperCompatibleInterface {
     uint256 private immutable i_interval;
     uint256 private s_lastTimeStamp;
     address private s_recentWinner;
-    uint256 private s_entranceFee;
+    uint256 private i_entranceFee;
     address payable[] private s_players;
     RaffleState private s_raffleState;
 
@@ -56,23 +58,26 @@ contract Raffle is Ownable, VRFConsumerBaseV2, KeeperCompatibleInterface {
         i_gasLane = gasLane;
         i_interval = interval;
         i_subscriptionId = subscriptionId;
-        s_entranceFee = entranceFee;
+        i_entranceFee = entranceFee;
         s_raffleState = RaffleState.OPEN;
         s_lastTimeStamp = block.timestamp;
         i_callbackGasLimit = callbackGasLimit;
     }
 
     function enterRaffle() public payable {
-        require(msg.value >= s_entranceFee, "Not enough value sent");
-        require(s_raffleState == RaffleState.OPEN, "Raffle is not open");
+        // require(msg.value >= i_entranceFee, "Not enough value sent");
+        // require(s_raffleState == RaffleState.OPEN, "Raffle is not open");
+        if (msg.value < i_entranceFee) {
+            revert Raffle__SendMoreToEnterRaffle();
+        }
+        if (s_raffleState != RaffleState.OPEN) {
+            revert Raffle__RaffleNotOpen();
+        }
         s_players.push(payable(msg.sender));
+        // Emit an event when we update a dynamic array or mapping
+        // Named events with the function name reversed
         emit RaffleEnter(msg.sender);
     }
-
-    // receive() external payable {}
-    // fallback() external {}
-    // selfdestruct on upgradeable smart contracts
-    // super somewhere...
 
     /**
      * @dev This is the function that the Chainlink Keeper nodes call
@@ -110,9 +115,14 @@ contract Raffle is Ownable, VRFConsumerBaseV2, KeeperCompatibleInterface {
         bytes calldata /* performData */
     ) external override {
         (bool upkeepNeeded, ) = checkUpkeep("");
-        require(upkeepNeeded, "Upkeep not needed");
-        // if (!upkeepNeeded) {revert UpkeepNotNeeded({address(this).balance, s_players.length, s_raffleState});}
-        s_lastTimeStamp = block.timestamp;
+        // require(upkeepNeeded, "Upkeep not needed");
+        if (!upkeepNeeded) {
+            revert Raffle__UpkeepNotNeeded(
+                address(this).balance,
+                s_players.length,
+                uint256(s_raffleState)
+            );
+        }
         s_raffleState = RaffleState.CALCULATING;
         uint256 requestId = i_vrfCoordinator.requestRandomWords(
             i_gasLane,
@@ -133,13 +143,23 @@ contract Raffle is Ownable, VRFConsumerBaseV2, KeeperCompatibleInterface {
         uint256, /* requestId */
         uint256[] memory randomWords
     ) internal override {
-        uint256 index = randomWords[0] % s_players.length;
-        address payable recentWinner = s_players[index];
+        // s_players size 10
+        // randomNumber 202
+        // 202 % 10 ? what's doesn't divide evenly into 202?
+        // 20 * 10 = 200
+        // 2
+        // 202 % 10 = 2
+        uint256 indexOfWinner = randomWords[0] % s_players.length;
+        address payable recentWinner = s_players[indexOfWinner];
         s_recentWinner = recentWinner;
         s_players = new address payable[](0);
         s_raffleState = RaffleState.OPEN;
+        s_lastTimeStamp = block.timestamp;
         (bool success, ) = recentWinner.call{value: address(this).balance}("");
-        require(success, "Transfer failed");
+        // require(success, "Transfer failed");
+        if (!success) {
+            revert Raffle__TransferFailed();
+        }
         emit WinnerPicked(recentWinner);
     }
 
@@ -174,6 +194,10 @@ contract Raffle is Ownable, VRFConsumerBaseV2, KeeperCompatibleInterface {
     }
 
     function getEntranceFee() public view returns (uint256) {
-        return s_entranceFee;
+        return i_entranceFee;
+    }
+
+    function getNumberOfPlayers() public view returns (uint256) {
+        return s_players.length;
     }
 }

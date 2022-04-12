@@ -44,7 +44,7 @@ import { Raffle, VRFCoordinatorV2Mock } from "../../typechain-types"
           describe("enterRaffle", () => {
               it("reverts when you don't pay enough", async () => {
                   await expect(raffle.enterRaffle()).to.be.revertedWith(
-                      "Not enough value sent to enter raffle"
+                      "Raffle__SendMoreToEnterRaffle"
                   )
               })
               it("records player when they enter", async () => {
@@ -70,7 +70,7 @@ import { Raffle, VRFCoordinatorV2Mock } from "../../typechain-types"
                   // we pretend to be a keeper for a second
                   await raffle.performUpkeep([])
                   await expect(raffle.enterRaffle({ value: raffleEntranceFee })).to.be.revertedWith(
-                      "Raffle is not open"
+                      "Raffle__RaffleNotOpen"
                   )
               })
           })
@@ -114,7 +114,7 @@ import { Raffle, VRFCoordinatorV2Mock } from "../../typechain-types"
                   assert(tx)
               })
               it("reverts if checkup is false", async () => {
-                  await expect(raffle.performUpkeep("0x")).to.be.revertedWith("Upkeep not needed")
+                  await expect(raffle.performUpkeep("0x")).to.be.revertedWith("Raffle__UpkeepNotNeeded")
               })
               it("updates the raffle state, latest timestamp, and emits a requestId", async () => {
                   // Too many asserts in this test!
