@@ -4,7 +4,7 @@ const {
     developmentChains,
     VERIFICATION_BLOCK_CONFIRMATIONS,
 } = require("../helper-hardhat-config")
-const { verify } = require("../helper-functions")
+const { verify } = require("../utils/verify")
 
 const FUND_AMOUNT = "1000000000000000000000"
 
