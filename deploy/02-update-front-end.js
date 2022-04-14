@@ -1,7 +1,6 @@
 const { frontEndContractsFile, frontEndAbiFile } = require("../helper-hardhat-config")
 const fs = require("fs")
 const { network } = require("hardhat")
-const FormatTypes = ethers.utils.FormatTypes
 
 module.exports = async () => {
     if (process.env.UPDATE_FRONT_END) {

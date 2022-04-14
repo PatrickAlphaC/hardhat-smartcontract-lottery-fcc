@@ -42,10 +42,9 @@ Video coming soon...
 ## Quickstart
 
 ```
-git clone --branch typescript https://github.com/PatrickAlphaC/hardhat-fund-me-fcc
+git clone https://github.com/PatrickAlphaC/hardhat-fund-me-fcc
 cd hardhat-fund-me-fcc
 yarn
-yarn typechain
 ```
 
 ## Typescript
@@ -54,6 +53,7 @@ If you want to get to typescript and you cloned the javascript version, just run
 
 ```
 git checkout typescript
+yarn 
 ```
 
 # Useage
