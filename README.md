@@ -42,8 +42,8 @@ Video coming soon...
 ## Quickstart
 
 ```
-git clone https://github.com/PatrickAlphaC/hardhat-fund-me-fcc
-cd hardhat-fund-me-fcc
+git clone https://github.com/PatrickAlphaC/hardhat-smartcontract-lottery-fcc
+cd hardhat-smartcontract-lottery-fcc
 yarn
 ```
 
