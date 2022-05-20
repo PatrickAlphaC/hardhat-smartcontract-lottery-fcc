@@ -186,9 +186,9 @@ contract CharityRaffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
             data[1] = charity2Total;
             data[2] = charity3Total;
             uint256[] memory sortedData = sort(data); // sortedData[2] = highest value
+            s_highestDonations = sortedData[2];
             // three-way-tie 
             if (charity1Total == charity2Total && charity1Total == charity3Total) {
-            s_highestDonations = charity1Total;
             charity1Total += randomWords[1];
             charity2Total += randomWords[2];
             charity3Total += randomWords[3];
@@ -215,7 +215,6 @@ contract CharityRaffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
             }
             // charity1 and charity2 tie
             if (sortedData[2] == charity1Total && sortedData[2] == charity2Total) {
-                s_highestDonations = charity1Total;
                 charity1Total += randomWords[1];
                 charity2Total += randomWords[2];
                 if (charity1Total > charity2Total) {
@@ -231,7 +230,6 @@ contract CharityRaffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
             }
             // charity1 and charity3 tie
             if (sortedData[2] == charity1Total && sortedData[2] == charity3Total) {
-                s_highestDonations = charity1Total;
                 charity1Total += randomWords[1];
                 charity3Total += randomWords[2];
                 if (charity1Total > charity3Total) {
@@ -247,7 +245,6 @@ contract CharityRaffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
             }
             // charity2 and charity3 tie
             if (sortedData[2] == charity2Total && sortedData[2] == charity3Total) {
-                s_highestDonations = charity2Total;
                 charity2Total += randomWords[1];
                 charity3Total += randomWords[2];
                 if (charity2Total > charity3Total) {
