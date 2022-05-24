@@ -8,7 +8,7 @@ import { Raffle, VRFCoordinatorV2Mock } from "../../typechain-types"
 
 !developmentChains.includes(network.name)
     ? describe.skip
-    : describe("Raffle Unit Tests", async function () {
+    : describe("Raffle Unit Tests",function () {
           let raffle: Raffle
           let raffleContract: Raffle
           let vrfCoordinatorV2Mock: VRFCoordinatorV2Mock
@@ -29,7 +29,7 @@ import { Raffle, VRFCoordinatorV2Mock } from "../../typechain-types"
               interval = (await raffle.getInterval()).toNumber()
           })
 
-          describe("constructor", () => {
+          describe("constructor", function() {
             it("intitiallizes the raffle correctly", async () => {
                 console.log(network.config.chainId)
                 // Ideally, we'd separate these out so that only 1 assert per "it" block
@@ -43,7 +43,7 @@ import { Raffle, VRFCoordinatorV2Mock } from "../../typechain-types"
             })
         })
 
-        describe("enterRaffle", () => {
+        describe("enterRaffle", function() {
             it("reverts when you don't pay enough", async () => {
                 await expect(raffle.enterRaffle()).to.be.revertedWith(
                     "Raffle__SendMoreToEnterRaffle"
@@ -71,7 +71,7 @@ import { Raffle, VRFCoordinatorV2Mock } from "../../typechain-types"
                 )
             })
         })
-        describe("checkUpkeep", () => {
+        describe("checkUpkeep", function() {
             it("returns false if people haven't sent any ETH", async () => {
                 await network.provider.send("evm_increaseTime", [interval + 1])
                 await network.provider.request({ method: "evm_mine", params: [] })
@@ -103,7 +103,7 @@ import { Raffle, VRFCoordinatorV2Mock } from "../../typechain-types"
             })
         })
 
-        describe("performUpkeep", () => {
+        describe("performUpkeep", function() {
             it("can only run if checkupkeep is true", async () => {
                 await raffle.enterRaffle({ value: raffleEntranceFee })
                 await network.provider.send("evm_increaseTime", [interval + 1])
@@ -129,7 +129,7 @@ import { Raffle, VRFCoordinatorV2Mock } from "../../typechain-types"
                 assert(raffleState == 1)
             })
         })
-        describe("fulfillRandomWords", () => {
+        describe("fulfillRandomWords", function() {
             beforeEach(async () => {
                 await raffle.enterRaffle({ value: raffleEntranceFee })
                 await network.provider.send("evm_increaseTime", [interval + 1])
