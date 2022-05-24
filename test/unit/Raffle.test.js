@@ -4,7 +4,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
 
 !developmentChains.includes(network.name)
     ? describe.skip
-    : describe("Raffle Unit Tests", async function () {
+    : describe("Raffle Unit Tests", function () {
           let raffle, raffleContract, vrfCoordinatorV2Mock, raffleEntranceFee, interval, player // , deployer
 
           beforeEach(async () => {
@@ -19,7 +19,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
               interval = await raffle.getInterval()
           })
 
-          describe("constructor", () => {
+          describe("constructor", function () {
               it("intitiallizes the raffle correctly", async () => {
                   // Ideally, we'd separate these out so that only 1 assert per "it" block
                   // And ideally, we'd make this check everything
@@ -32,7 +32,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
               })
           })
 
-          describe("enterRaffle", () => {
+          describe("enterRaffle", function () {
               it("reverts when you don't pay enough", async () => {
                   await expect(raffle.enterRaffle()).to.be.revertedWith(
                       "Raffle__SendMoreToEnterRaffle"
@@ -60,7 +60,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                   )
               })
           })
-          describe("checkUpkeep", () => {
+          describe("checkUpkeep", function () {
               it("returns false if people haven't sent any ETH", async () => {
                   await network.provider.send("evm_increaseTime", [interval.toNumber() + 1])
                   await network.provider.request({ method: "evm_mine", params: [] })
@@ -92,7 +92,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
               })
           })
 
-          describe("performUpkeep", () => {
+          describe("performUpkeep", function () {
               it("can only run if checkupkeep is true", async () => {
                   await raffle.enterRaffle({ value: raffleEntranceFee })
                   await network.provider.send("evm_increaseTime", [interval.toNumber() + 1])
@@ -118,7 +118,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                   assert(raffleState == 1)
               })
           })
-          describe("fulfillRandomWords", () => {
+          describe("fulfillRandomWords", function () {
               beforeEach(async () => {
                   await raffle.enterRaffle({ value: raffleEntranceFee })
                   await network.provider.send("evm_increaseTime", [interval.toNumber() + 1])
