@@ -2,7 +2,7 @@
 
 This is a section of the Javascript Blockchain/Smart Contract FreeCodeCamp Course.
 
-Video Coming soon...
+*[⌨️ (13:41:02) Lesson 9: Hardhat Smart Contract Lottery](https://www.youtube.com/watch?v=gyMwXuJrbJQ&t=49262s)*
 
 [Full Repo](https://github.com/smartcontractkit/full-blockchain-solidity-course-js)
 
