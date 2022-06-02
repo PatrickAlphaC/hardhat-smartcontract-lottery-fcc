@@ -26,7 +26,6 @@ developmentChains.includes(network.name)
                       // Just in case the blockchain moves REALLY fast
                       raffle.once("WinnerPicked", async () => {
                           console.log("WinnerPicked event fired!")
-                          resolve()
                           try {
                               // add our asserts here
                               const recentWiner = await raffle.getRecentWinner()
