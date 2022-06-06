@@ -28,7 +28,7 @@ developmentChains.includes(network.name)
                           console.log("WinnerPicked event fired!")
                           try {
                               // add our asserts here
-                              const recentWiner = await raffle.getRecentWinner()
+                              const recentWinner = await raffle.getRecentWinner()
                               const raffleState = await raffle.getRaffleState()
                               const winnerEndingBalance = await accounts[0].getBalance()
                               const endingTimeStamp = await raffle.getLastTimeStamp()
