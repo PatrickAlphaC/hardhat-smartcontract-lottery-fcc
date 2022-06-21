@@ -49,7 +49,8 @@ developmentChains.includes(network.name)
                       })
                       // Then entering the raffle
                       console.log("Entering Raffle...")
-                      await raffle.enterRaffle({ value: raffleEntranceFee })
+                      const tx = await raffle.enterRaffle({ value: raffleEntranceFee })
+                      await tx.wait(1)
                       console.log("Ok, time to wait...")
                       const winnerStartingBalance = await accounts[0].getBalance()
 

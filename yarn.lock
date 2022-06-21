@@ -83,7 +83,7 @@
     "@types/node" "12.12.54"
     lodash "^4.17.11"
 
-"@0x/sol-trace@^3.0.29", "@0x/sol-trace@^3.0.7":
+"@0x/sol-trace@^3.0.29":
   version "3.0.42"
   resolved "https://registry.yarnpkg.com/@0x/sol-trace/-/sol-trace-3.0.42.tgz#5a1cb6d4213bbf6746bf393858019fb7b3586916"
   integrity sha512-8Elq5aFgMvmUNi3rvDTSA84VMtiyCBNFDaIiKQZ9YtZbgOJnyfxBbelV0sXggnmoochpQ72yX0Cxe3WEdR+5JQ==
@@ -127,7 +127,7 @@
     solc "^0.5.5"
     solidity-parser-antlr "^0.4.2"
 
-"@0x/subproviders@^6.1.1", "@0x/subproviders@^6.2.0", "@0x/subproviders@^6.6.2":
+"@0x/subproviders@^6.2.0", "@0x/subproviders@^6.6.2":
   version "6.6.2"
   resolved "https://registry.yarnpkg.com/@0x/subproviders/-/subproviders-6.6.2.tgz#c51b3167fcd3b58f5522305864bd4896455ee697"
   integrity sha512-/SB6BurdYbGXvIa3rmQdaUYPk7D+BFiAAkvQbsA4s//51eVLLQG+QdgDT1RUKGJbhX11ff31jc7dEu/wh6nQhg==
@@ -212,20 +212,6 @@
     ethereumjs-util "^7.1.0"
     ethers "~4.0.4"
     lodash "^4.17.11"
-
-"@appliedblockchain/chainlink-contracts@0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@appliedblockchain/chainlink-contracts/-/chainlink-contracts-0.0.4.tgz#ee65494d18075a6c286c776f1201d01ed7bb6cd7"
-  integrity sha512-TdgNdKoxJcFqatXW3+WquvVdwAU2eMe4yY460yxUM5b4Wxigo5+uxmSvGmBrld6I1gHe0ObPqqQMIJxnegtYGA==
-  dependencies:
-    "@chainlink/contracts" "^0.1.9"
-    "@chainlink/test-helpers" "0.0.5"
-    "@chainlink/token" "^1.1.0"
-
-"@appliedblockchain/chainlink-plugins-fund-link@0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@appliedblockchain/chainlink-plugins-fund-link/-/chainlink-plugins-fund-link-0.0.1.tgz#2e0339283083073a69fb8c9fa2050385b3fddfd2"
-  integrity sha512-2LjexuACeLKsjSEeDwJ/oBJiILA1KgqjzvQWP9NddQqM7QONQtAVlCcyCz2k4CjspIAwFQsTxW4CosXTJbRMyg==
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.16.7":
   version "7.16.7"
@@ -339,32 +325,10 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@chainlink/contracts@^0.1.9":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@chainlink/contracts/-/contracts-0.1.9.tgz#b2e77b87d7eea737cd668c4c727660e7b55cd236"
-  integrity sha512-7UIqkdzarbK876YZAiGKeYj/ujG3FPVVxWLACxbdyacM+ryIAgcZMkaaavt5+NwVXJvVjwWmucWTDCTy0JP8ag==
-  optionalDependencies:
-    "@truffle/contract" "^4.3.8"
-    ethers "^4.0.45"
-
 "@chainlink/contracts@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@chainlink/contracts/-/contracts-0.4.0.tgz#4bcfd486d02cdc73047f27904119d0f8cb7291f4"
   integrity sha512-yZGeCBd7d+qxfw9r/JxtPzsW2kCc6MorPRZ/tDKnaJI98H99j5P2Fosfehmcwk6wVZlz+0Bp4kS1y480nw3Zow==
-
-"@chainlink/test-helpers@0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@chainlink/test-helpers/-/test-helpers-0.0.5.tgz#df6c6bed87f09cdcc314e8668ce0b0c3e48a0949"
-  integrity sha512-m8El5Gv8I6yuJ4XZo3kKJccUPCxb890k4Pl+4hQ0yfFGcF7t50Qfz7RbiLiHJTqtPbsMb2dDr7MydPn6OWlsVg==
-  dependencies:
-    "@0x/sol-trace" "^3.0.7"
-    "@0x/subproviders" "^6.1.1"
-    bn.js "^4.11.0"
-    cbor "^5.0.2"
-    chai "^4.2.0"
-    chalk "^4.1.0"
-    debug "^4.1.1"
-    ethers "^4.0.45"
 
 "@chainlink/test-helpers@^0.0.7-alpha":
   version "0.0.7-alpha"
@@ -1719,7 +1683,7 @@
     ajv "^6.10.0"
     debug "^4.3.1"
 
-"@truffle/contract@^4.1.8", "@truffle/contract@^4.3.8":
+"@truffle/contract@^4.1.8":
   version "4.4.7"
   resolved "https://registry.yarnpkg.com/@truffle/contract/-/contract-4.4.7.tgz#deea6d774a3aa08f7e14951774312cff15d81ca2"
   integrity sha512-327jjHAHmCfpmstUDVVFH4kLMpQh47/QyzKBiOkjaTX97wd0WrqXlCZYn1hMmcP08j4GnoIzvecZn3zW0xizSQ==
@@ -5319,6 +5283,7 @@ ethereumjs-blockchain@^4.0.3:
     semaphore "^1.1.0"
 
 ethereumjs-common@1.5.0, "ethjs-common-v1@npm:ethereumjs-common@1.5.0":
+  name ethjs-common-v1
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/ethereumjs-common/-/ethereumjs-common-1.5.0.tgz#d3e82fc7c47c0cef95047f431a99485abc9bb1cd"
   integrity sha512-SZOjgK1356hIY7MRj3/ma5qtfr/4B5BL+G4rP/XSMYr2z1H5el4RX5GReYCKmQmYI/nSBmRnwrZ17IfHuG0viQ==
@@ -5365,6 +5330,7 @@ ethereumjs-util@6.2.0:
     secp256k1 "^3.0.1"
 
 ethereumjs-util@6.2.1, ethereumjs-util@^6.0.0, ethereumjs-util@^6.1.0, ethereumjs-util@^6.2.0, ethereumjs-util@^6.2.1, "ethjs-util-v6@npm:ethereumjs-util@6.2.1":
+  name ethjs-util-v6
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/ethereumjs-util/-/ethereumjs-util-6.2.1.tgz#fcb4e4dd5ceacb9d2305426ab1a5cd93e3163b69"
   integrity sha512-W2Ktez4L01Vexijrm5EB6w7dg4n/TgpoYU4avuT5T3Vmnw/eCRtiBrJfQYS/DCSvDIOLn2k57GcHdeBcgVxAqw==
