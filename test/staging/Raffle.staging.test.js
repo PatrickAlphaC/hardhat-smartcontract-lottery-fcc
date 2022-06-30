@@ -4,7 +4,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
 
 developmentChains.includes(network.name)
     ? describe.skip
-    : describe("Raffle Unit Tests", function () {
+    : describe("Raffle Staging Tests", function () {
           let raffle, raffleEntranceFee, deployer
 
           beforeEach(async function () {
@@ -44,7 +44,7 @@ developmentChains.includes(network.name)
                               resolve()
                           } catch (error) {
                               console.log(error)
-                              reject(e)
+                              reject(error)
                           }
                       })
                       // Then entering the raffle
