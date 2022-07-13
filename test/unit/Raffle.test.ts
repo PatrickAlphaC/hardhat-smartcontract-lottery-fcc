@@ -146,7 +146,7 @@ import { Raffle, VRFCoordinatorV2Mock } from "../../typechain-types"
             // This test is too big...
             it("picks a winner, resets, and sends money", async () => {
                 const additionalEntrances = 3
-                const startingIndex = 2
+                const startingIndex = 1
                 for (let i = startingIndex; i < startingIndex + additionalEntrances; i++) {
                     raffle = raffleContract.connect(accounts[i])
                     await raffle.enterRaffle({ value: raffleEntranceFee })
