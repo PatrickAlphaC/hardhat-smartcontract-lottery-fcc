@@ -29,8 +29,8 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     uint64 private immutable i_subscriptionId;
     bytes32 private immutable i_gasLane;
     uint32 private immutable i_callbackGasLimit;
-    uint16 private constant REQUEST_CONFIRMATIONS = 3;
     uint32 private constant NUM_WORDS = 1;
+    uint16 private constant REQUEST_CONFIRMATIONS = 3;
 
     // Lottery Variables
     uint256 private immutable i_interval;
