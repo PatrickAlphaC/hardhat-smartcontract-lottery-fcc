@@ -4,7 +4,6 @@ require("hardhat-deploy")
 require("solidity-coverage")
 require("hardhat-gas-reporter")
 require("hardhat-contract-sizer")
-require("@appliedblockchain/chainlink-plugins-fund-link")
 require("dotenv").config()
 
 /**
@@ -20,7 +19,7 @@ const RINKEBY_RPC_URL =
 const KOVAN_RPC_URL = process.env.KOVAN_RPC_URL || "https://eth-kovan.alchemyapi.io/v2/your-api-key"
 const POLYGON_MAINNET_RPC_URL =
     process.env.POLYGON_MAINNET_RPC_URL || "https://polygon-mainnet.alchemyapi.io/v2/your-api-key"
-const PRIVATE_KEY = process.env.PRIVATE_KEY
+const PRIVATE_KEY = process.env.PRIVATE_KEY || "0x"
 // optional
 const MNEMONIC = process.env.MNEMONIC || "your mnemonic"
 
@@ -77,7 +76,7 @@ module.exports = {
         },
     },
     etherscan: {
-        // npx hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
+        // yarn hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
         apiKey: {
             rinkeby: ETHERSCAN_API_KEY,
             kovan: ETHERSCAN_API_KEY,
@@ -107,7 +106,7 @@ module.exports = {
     solidity: {
         compilers: [
             {
-                version: "0.8.8",
+                version: "0.8.7",
             },
             {
                 version: "0.4.24",
@@ -115,6 +114,6 @@ module.exports = {
         ],
     },
     mocha: {
-        timeout: 200000, // 200 seconds max for running tests
+        timeout: 500000, // 500 seconds max for running tests
     },
 }

@@ -4,7 +4,7 @@ const {
     developmentChains,
     VERIFICATION_BLOCK_CONFIRMATIONS,
 } = require("../helper-hardhat-config")
-const { verify } = require("../helper-functions")
+const { verify } = require("../utils/verify")
 
 const FUND_AMOUNT = "1000000000000000000000"
 
@@ -33,7 +33,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         : VERIFICATION_BLOCK_CONFIRMATIONS
 
     log("----------------------------------------------------")
-    arguments = [
+    const arguments = [
         vrfCoordinatorV2Address,
         subscriptionId,
         networkConfig[chainId]["gasLane"],
@@ -54,7 +54,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         await verify(raffle.address, arguments)
     }
 
-    log("Run Price Feed contract with command:")
+    log("Enter lottery with command:")
     const networkName = network.name == "hardhat" ? "localhost" : network.name
     log(`yarn hardhat run scripts/enterRaffle.js --network ${networkName}`)
     log("----------------------------------------------------")

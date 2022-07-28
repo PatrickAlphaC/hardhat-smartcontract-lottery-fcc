@@ -1,14 +1,14 @@
 {
-  "name": "hardhat-starter-kit",
+  "name": "hardhat-smartcontract-lottery-fcc",
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "hardhat test test/unit/PriceConsumerV3_unit_test.js --network hardhat && hardhat test test/unit/APIConsumer_unit_test.js --network hardhat && hardhat test test/unit/RandomNumberConsumer_unit_test.js --network hardhat && hardhat test test/unit/KeepersCounter_unit_test.js --network hardhat",
-    "test-staging": "hardhat test test/staging/APIConsumer_int_test.js --network kovan && hardhat test test/staging/RandomNumberConsumer_int_test.js --network kovan",
-    "lint": "solhint 'contracts/*.sol'",
-    "lint:fix": "solhint 'contracts/**/*.sol' --fix",
-    "format": "prettier --write .",
-    "coverage": "hardhat coverage"
+    "test": "yarn hardhat test",
+    "test-staging": "yarn hardhat test --network rinkeby",
+    "lint": "yarn solhint 'contracts/*.sol'",
+    "lint:fix": "yarn solhint 'contracts/**/*.sol' --fix",
+    "format": "yarn prettier --write .",
+    "coverage": "yarn hardhat coverage"
   },
   "license": "MIT",
   "devDependencies": {
@@ -28,8 +28,6 @@
     "solidity-coverage": "^0.7.13"
   },
   "dependencies": {
-    "@appliedblockchain/chainlink-contracts": "0.0.4",
-    "@appliedblockchain/chainlink-plugins-fund-link": "0.0.1",
     "@chainlink/contracts": "^0.4.0",
     "@chainlink/test-helpers": "^0.0.7-alpha",
     "@chainlink/token": "^1.1.0",
