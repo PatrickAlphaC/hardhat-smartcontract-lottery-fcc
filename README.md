@@ -11,7 +11,7 @@ This is a section of the Javascript Blockchain/Smart Contract FreeCodeCamp Cours
   - [Requirements](#requirements)
   - [Quickstart](#quickstart)
   - [Typescript](#typescript)
-- [Useage](#useage)
+- [Usage](#usage)
   - [Testing](#testing)
     - [Test Coverage](#test-coverage)
 - [Deployment to a testnet or mainnet](#deployment-to-a-testnet-or-mainnet)
@@ -56,7 +56,7 @@ git checkout typescript
 yarn 
 ```
 
-# Useage
+# Usage
 
 Deploy:
 
