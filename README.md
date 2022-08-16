@@ -23,7 +23,7 @@ This is a section of the Javascript Blockchain/Smart Contract FreeCodeCamp Cours
 
 This project is apart of the Hardhat FreeCodeCamp video.
 
-Checkout the full blockchain course video [here](https://www.youtube.com/watch?v=gyMwXuJrbJQ)
+Checkout the full blockchain course video [here.](https://www.youtube.com/watch?v=gyMwXuJrbJQ)
 
 # Getting Started
 
