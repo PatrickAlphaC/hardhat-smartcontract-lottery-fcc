@@ -23,6 +23,8 @@ This is a section of the Javascript Blockchain/Smart Contract FreeCodeCamp Cours
 
 This project is apart of the Hardhat FreeCodeCamp video.
 
+Checkout the full blockchain course video [here.](https://www.youtube.com/watch?v=gyMwXuJrbJQ)
+
 # Getting Started
 
 ## Requirements
@@ -118,7 +120,7 @@ Go back to [vrf.chain.link](https://vrf.chain.link) and under your subscription 
 
 [You can follow the documentation if you get lost.](https://docs.chain.link/docs/chainlink-keepers/compatible-contracts/)
 
-Go to [keepers.chain.link](https://keepers.chain.link/new) and register a new upkeep. Your UI will look something like this once completed:
+Go to [keepers.chain.link](https://keepers.chain.link/new) and register a new upkeep. Choose `Custom logic` as your trigger mechanism for automation. Your UI will look something like this once completed:
 
 ![Keepers](./img/keepers.png)
 
