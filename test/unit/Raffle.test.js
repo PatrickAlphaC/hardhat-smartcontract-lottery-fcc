@@ -20,7 +20,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
           })
 
           describe("constructor", function () {
-              it("intitiallizes the raffle correctly", async () => {
+              it("initializes the raffle correctly", async () => {
                   // Ideally, we'd separate these out so that only 1 assert per "it" block
                   // And ideally, we'd make this check everything
                   const raffleState = (await raffle.getRaffleState()).toString()
