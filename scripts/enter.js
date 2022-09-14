@@ -1,6 +1,7 @@
-const { ethers } = require("hardhat")
+const { ethers, deployments } = require("hardhat")
 
 async function enterRaffle() {
+    await deployments.fixture(["all"])
     const raffle = await ethers.getContract("Raffle")
     const entranceFee = await raffle.getEntranceFee()
     await raffle.enterRaffle({ value: entranceFee + 1 })
