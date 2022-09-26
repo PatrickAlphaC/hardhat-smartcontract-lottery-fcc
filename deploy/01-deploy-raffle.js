@@ -6,7 +6,7 @@ const {
 } = require("../helper-hardhat-config")
 const { verify } = require("../utils/verify")
 
-const FUND_AMOUNT = "1000000000000000000000"
+const FUND_AMOUNT = ethers.utils.parseEther("1") // 1 ETH or 1^18
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deploy, log } = deployments
