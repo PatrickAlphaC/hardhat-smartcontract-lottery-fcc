@@ -1,4 +1,4 @@
-import { getNamedAccounts, deployments, network, run }  from "hardhat"
+
 import {DeployFunction} from "hardhat-deploy/types"
 import {HardhatRuntimeEnvironment} from "hardhat/types"
 
@@ -19,7 +19,7 @@ const deployRaffle: DeployFunction = async function (
     const { deployer } = await getNamedAccounts()
     // const chainId = network.config.chainId
     const chainId = 31337
-    let vrfCoordinatorV2Address, subscriptionId
+    let vrfCoordinatorV2Address: string | undefined, subscriptionId: string | undefined
 
     if (chainId == 31337) {
         // create VRFV2 Subscription
