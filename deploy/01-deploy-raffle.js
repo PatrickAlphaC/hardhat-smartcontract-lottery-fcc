@@ -6,7 +6,7 @@ const {
 } = require("../helper-hardhat-config")
 const { verify } = require("../utils/verify")
 
-const FUND_AMOUNT = ethers.utils.parseEther("1") // 1 ETH or 1^18
+const FUND_AMOUNT = ethers.utils.parseEther("1") // 1 Ether, or 1e18 (10^18) Wei
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deploy, log } = deployments
