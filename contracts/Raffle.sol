@@ -4,7 +4,11 @@ pragma solidity ^0.8.7;
 
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
-import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
+/**
+ * @notice This is a deprecated interface. Please use AutomationCompatibleInterface directly.
+ * // import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
+ */
+import "@chainlink/contracts/src/v0.8/interfaces/AutomationCompatibleInterface.sol";
 import "hardhat/console.sol";
 
 /* Errors */
@@ -18,7 +22,7 @@ error Raffle__RaffleNotOpen();
  * @notice This contract is for creating a sample raffle contract
  * @dev This implements the Chainlink VRF Version 2
  */
-contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
+contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
     /* Type declarations */
     enum RaffleState {
         OPEN,
