@@ -151,17 +151,17 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
         // 2
         // 202 % 10 = 2
         uint256 indexOfWinner = randomWords[0] % s_players.length;
-        address payable recentWinner = s_players[indexOfWinner];
-        s_recentWinner = recentWinner;
+        s_recentWinner = s_players[indexOfWinner];
+        
         s_players = new address payable[](0);
         s_raffleState = RaffleState.OPEN;
         s_lastTimeStamp = block.timestamp;
-        (bool success, ) = recentWinner.call{value: address(this).balance}("");
+        (bool success, ) = s_recentWinner.call{value: address(this).balance}("");
         // require(success, "Transfer failed");
         if (!success) {
             revert Raffle__TransferFailed();
         }
-        emit WinnerPicked(recentWinner);
+        emit WinnerPicked(s_recentWinner);
     }
 
     /** Getter Functions */
