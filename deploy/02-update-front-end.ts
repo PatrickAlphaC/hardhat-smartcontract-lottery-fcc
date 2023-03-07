@@ -21,6 +21,7 @@ const updateUI: DeployFunction = async function (
             contractAddresses[network.config.chainId!] = [fundMe.address]
         }
         fs.writeFileSync(frontEndContractsFile, JSON.stringify(contractAddresses))
+        fs.writeFileSync(frontEndAbiFile, raffle.interface.format(ethers.utils.FormatTypes.json))
         console.log("Front end written!")
     }
 }
