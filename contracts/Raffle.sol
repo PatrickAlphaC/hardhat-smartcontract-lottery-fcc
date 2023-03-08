@@ -115,7 +115,7 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
     function performUpkeep(
         bytes calldata /* performData */
     ) external override {
-        (bool upkeepNeeded, ) = checkUpkeep("");
+        (bool upkeepNeeded, ) = checkUpkeep("0");
         // require(upkeepNeeded, "Upkeep not needed");
         if (!upkeepNeeded) {
             revert Raffle__UpkeepNotNeeded(
