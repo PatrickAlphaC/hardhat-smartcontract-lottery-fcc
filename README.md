@@ -2,7 +2,7 @@
 
 This is a section of the Javascript Blockchain/Smart Contract FreeCodeCamp Course.
 
-Video Coming soon...
+⌨️ [(13:41:02) Lesson 9: Hardhat Smart Contract Lottery](https://www.youtube.com/watch?v=gyMwXuJrbJQ&t=49262s)
 
 [Full Repo](https://github.com/smartcontractkit/full-blockchain-solidity-course-js)
 
@@ -22,8 +22,6 @@ Video Coming soon...
 - [Thank you!](#thank-you)
 
 This project is apart of the Hardhat FreeCodeCamp video.
-
-Video coming soon...
 
 # Getting Started
 
@@ -82,11 +80,11 @@ yarn hardhat coverage
 
 1. Setup environment variabltes
 
-You'll want to set your `RINKEBY_RPC_URL` and `PRIVATE_KEY` as environment variables. You can add them to a `.env` file, similar to what you see in `.env.example`.
+You'll want to set your `SEPOLIA_RPC_URL` and `PRIVATE_KEY` as environment variables. You can add them to a `.env` file, similar to what you see in `.env.example`.
 
 - `PRIVATE_KEY`: The private key of your account (like from [metamask](https://metamask.io/)). **NOTE:** FOR DEVELOPMENT, PLEASE USE A KEY THAT DOESN'T HAVE ANY REAL FUNDS ASSOCIATED WITH IT.
   - You can [learn how to export it here](https://metamask.zendesk.com/hc/en-us/articles/360015289632-How-to-Export-an-Account-Private-Key).
-- `RINKEBY_RPC_URL`: This is url of the rinkeby testnet node you're working with. You can get setup with one for free from [Alchemy](https://alchemy.com/?a=673c802981)
+- `SEPOLIA_RPC_URL`: This is url of the sepolia testnet node you're working with. You can get setup with one for free from [Alchemy](https://alchemy.com/?a=673c802981)
 
 2. Get testnet ETH
 
@@ -103,11 +101,11 @@ Head over to [vrf.chain.link](https://vrf.chain.link/) and setup a new subscript
 
 3. Deploy
 
-In your `helper-hardhat-config.ts` add your `subscriptionId` under the section of the chainId you're using (aka, if you're deploying to rinkeby, add your `subscriptionId` in the `subscriptionId` field under the `4` section.)
+In your `helper-hardhat-config.ts` add your `subscriptionId` under the section of the chainId you're using (aka, if you're deploying to sepolia, add your `subscriptionId` in the `subscriptionId` field under the `11155111` section.)
 
 Then run:
 ```
-yarn hardhat deploy --network rinkeby
+yarn hardhat deploy --network sepolia
 ```
 
 And copy / remember the contract address. 
@@ -129,7 +127,7 @@ Go to [keepers.chain.link](https://keepers.chain.link/new) and register a new up
 You're contract is now setup to be a tamper proof autonomous verifiably random lottery. Enter the lottery by running:
 
 ```
-yarn hardhat run scripts/enter.ts --network rinkeby
+yarn hardhat run scripts/enter.ts --network sepolia
 ```
 
 ### Estimate gas cost in USD
@@ -144,7 +142,7 @@ Then, uncomment the line `coinmarketcap: COINMARKETCAP_API_KEY,` in `hardhat.con
 
 If you deploy to a testnet or mainnet, you can verify it if you get an [API Key](https://etherscan.io/myapikey) from Etherscan and set it as an environemnt variable named `ETHERSCAN_API_KEY`. You can pop it into your `.env` file as seen in the `.env.example`.
 
-In it's current state, if you have your api key set, it will auto verify kovan contracts!
+In it's current state, if you have your api key set, it will auto verify sepolia contracts!
 
 However, you can manual verify with:
 
