@@ -63,7 +63,7 @@ const deployRaffle: DeployFunction = async function (
 
     log("Run Price Feed contract with command:")
     const networkName = network.name == "hardhat" ? "localhost" : network.name
-    log(`yarn hardhat run scripts/enterRaffle.js --network ${networkName}`)
+    log(`yarn hardhat run scripts/enterRaffle.ts --network ${networkName}`)
     log("----------------------------------------------------")
 }
 export default deployRaffle
