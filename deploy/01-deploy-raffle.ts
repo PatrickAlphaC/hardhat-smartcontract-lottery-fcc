@@ -17,8 +17,8 @@ const deployRaffle: DeployFunction = async function (
     const { deployments, getNamedAccounts, network, ethers } = hre
     const { deploy, log } = deployments
     const { deployer } = await getNamedAccounts()
-    // const chainId = network.config.chainId
-    const chainId = 31337
+    const chainId = network.config.chainId
+    // const chainId = 31337
     let vrfCoordinatorV2Address: string | undefined, subscriptionId: string | undefined
 
     if (chainId == 31337) {
