@@ -17,8 +17,8 @@ const deployRaffle: DeployFunction = async function (
     const { deployments, getNamedAccounts, network, ethers } = hre
     const { deploy, log } = deployments
     const { deployer } = await getNamedAccounts()
-    // const chainId = network.config.chainId
-    const chainId = 31337
+    const chainId = network.config.chainId
+    // const chainId = 31337
     let vrfCoordinatorV2Address: string | undefined, subscriptionId: string | undefined
 
     if (chainId == 31337) {
@@ -63,7 +63,7 @@ const deployRaffle: DeployFunction = async function (
 
     log("Run Price Feed contract with command:")
     const networkName = network.name == "hardhat" ? "localhost" : network.name
-    log(`yarn hardhat run scripts/enterRaffle.js --network ${networkName}`)
+    log(`yarn hardhat run scripts/enterRaffle.ts --network ${networkName}`)
     log("----------------------------------------------------")
 }
 export default deployRaffle
