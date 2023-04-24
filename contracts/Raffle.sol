@@ -24,10 +24,10 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
         OPEN,
         CALCULATING
     }
-    
+
     /* Mappings */
     mapping(uint256 => address) private s_playersMapping;
-    
+
     /* State variables */
     // Chainlink VRF Variables
     VRFCoordinatorV2Interface private immutable i_vrfCoordinator;
@@ -43,7 +43,6 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
     uint256 private immutable i_entranceFee;
     uint256 private s_lastTimeStamp;
     address private s_recentWinner;
-    address payable[] private s_players;
     RaffleState private s_raffleState;
 
     /* Events */
@@ -79,8 +78,8 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
         if (s_raffleState != RaffleState.OPEN) {
             revert Raffle__RaffleNotOpen();
         }
-        s_playersMapping[s_playersCount] = player;
-        ++s_playersCount; 
+        s_playersMapping[s_playersCount] = msg.sender;
+        ++s_playersCount;
         // Emit an event when we update a dynamic array or mapping
         // Named events with the function name reversed
         emit RaffleEnter(msg.sender);
@@ -97,15 +96,7 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
      */
     function checkUpkeep(
         bytes memory /* checkData */
-    )
-        public
-        view
-        override
-        returns (
-            bool upkeepNeeded,
-            bytes memory /* performData */
-        )
-    {
+    ) public view override returns (bool upkeepNeeded, bytes memory /* performData */) {
         bool isOpen = RaffleState.OPEN == s_raffleState;
         bool timePassed = ((block.timestamp - s_lastTimeStamp) > i_interval);
         bool hasPlayers = s_playersCount > 0;
@@ -118,9 +109,7 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
      * @dev Once `checkUpkeep` is returning `true`, this function is called
      * and it kicks off a Chainlink VRF call to get a random winner.
      */
-    function performUpkeep(
-        bytes calldata /* performData */
-    ) external override {
+    function performUpkeep(bytes calldata /* performData */) external override {
         (bool upkeepNeeded, ) = checkUpkeep("");
         // require(upkeepNeeded, "Upkeep not needed");
         if (!upkeepNeeded) {
@@ -147,7 +136,7 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
      * calls to send the money to the random winner.
      */
     function fulfillRandomWords(
-        uint256, /* requestId */
+        uint256 /* requestId */,
         uint256[] memory randomWords
     ) internal override {
         // s_players size 10
@@ -157,7 +146,7 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
         // 2
         // 202 % 10 = 2
         uint256 indexOfWinner = randomWords[0] % s_playersCount;
-        address payable recentWinner = s_players[indexOfWinner];
+        address payable recentWinner = payable(s_playersMapping[indexOfWinner]);
         s_recentWinner = recentWinner;
         s_playersCount = 0;
         s_raffleState = RaffleState.OPEN;
@@ -189,7 +178,7 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
     }
 
     function getPlayer(uint256 index) public view returns (address) {
-        return s_players[index];
+        return s_playersMapping[index];
     }
 
     function getLastTimeStamp() public view returns (uint256) {
