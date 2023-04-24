@@ -24,6 +24,10 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
         OPEN,
         CALCULATING
     }
+    
+    /* Mappings */
+    mapping(uint256 => address) private s_playersMapping;
+    
     /* State variables */
     // Chainlink VRF Variables
     VRFCoordinatorV2Interface private immutable i_vrfCoordinator;
@@ -34,6 +38,7 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
     uint32 private constant NUM_WORDS = 1;
 
     // Lottery Variables
+    uint256 private s_playersCount;
     uint256 private immutable i_interval;
     uint256 private immutable i_entranceFee;
     uint256 private s_lastTimeStamp;
@@ -74,7 +79,8 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
         if (s_raffleState != RaffleState.OPEN) {
             revert Raffle__RaffleNotOpen();
         }
-        s_players.push(payable(msg.sender));
+        s_playersMapping[s_playersCount] = player;
+        ++s_playersCount; 
         // Emit an event when we update a dynamic array or mapping
         // Named events with the function name reversed
         emit RaffleEnter(msg.sender);
@@ -102,7 +108,7 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
     {
         bool isOpen = RaffleState.OPEN == s_raffleState;
         bool timePassed = ((block.timestamp - s_lastTimeStamp) > i_interval);
-        bool hasPlayers = s_players.length > 0;
+        bool hasPlayers = s_playersCount > 0;
         bool hasBalance = address(this).balance > 0;
         upkeepNeeded = (timePassed && isOpen && hasBalance && hasPlayers);
         return (upkeepNeeded, "0x0"); // can we comment this out?
@@ -120,7 +126,7 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
         if (!upkeepNeeded) {
             revert Raffle__UpkeepNotNeeded(
                 address(this).balance,
-                s_players.length,
+                s_playersCount,
                 uint256(s_raffleState)
             );
         }
@@ -150,10 +156,10 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
         // 20 * 10 = 200
         // 2
         // 202 % 10 = 2
-        uint256 indexOfWinner = randomWords[0] % s_players.length;
+        uint256 indexOfWinner = randomWords[0] % s_playersCount;
         address payable recentWinner = s_players[indexOfWinner];
         s_recentWinner = recentWinner;
-        s_players = new address payable[](0);
+        s_playersCount = 0;
         s_raffleState = RaffleState.OPEN;
         s_lastTimeStamp = block.timestamp;
         (bool success, ) = recentWinner.call{value: address(this).balance}("");
@@ -199,6 +205,6 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
     }
 
     function getNumberOfPlayers() public view returns (uint256) {
-        return s_players.length;
+        return s_playersCount;
     }
 }
