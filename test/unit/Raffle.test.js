@@ -194,8 +194,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                             raffle.address
                         )
                       } catch (e) {
-                          console.log(e);
-                          process.exit(1);
+                          reject(e)
                       }
                   })
               })
