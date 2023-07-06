@@ -185,13 +185,17 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                       })
 
                       // kicking off the event by mocking the chainlink keepers and vrf coordinator
-                      const tx = await raffle.performUpkeep("0x")
-                      const txReceipt = await tx.wait(1)
-                      const startingBalance = await accounts[2].getBalance()
-                      await vrfCoordinatorV2Mock.fulfillRandomWords(
-                          txReceipt.events[1].args.requestId,
-                          raffle.address
-                      )
+                      try {
+                        const tx = await raffle.performUpkeep("0x")
+                        const txReceipt = await tx.wait(1)
+                        const startingBalance = await accounts[2].getBalance()
+                        await vrfCoordinatorV2Mock.fulfillRandomWords(
+                            txReceipt.events[1].args.requestId,
+                            raffle.address
+                        )
+                      } catch (e) {
+                          reject(e)
+                      }
                   })
               })
           })
