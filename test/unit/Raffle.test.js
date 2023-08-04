@@ -5,13 +5,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
 !developmentChains.includes(network.name)
     ? describe.skip
     : describe("Raffle Unit Tests", function () {
-          let raffle,
-              raffleContract,
-              vrfCoordinatorV2Mock,
-              raffleEntranceFee,
-              interval,
-              startingBalance,
-              player // , deployer
+          let raffle, raffleContract, vrfCoordinatorV2Mock, raffleEntranceFee, interval, player // , deployer
 
           beforeEach(async () => {
               accounts = await ethers.getSigners() // could also do with getNamedAccounts
@@ -153,6 +147,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
               it("picks a winner, resets, and sends money", async () => {
                   const additionalEntrances = 3 // to test
                   const startingIndex = 2
+                  let startingBalance
                   for (let i = startingIndex; i < startingIndex + additionalEntrances; i++) {
                       // i = 2; i < 5; i=i+1
                       raffle = raffleContract.connect(accounts[i]) // Returns a new instance of the Raffle contract connected to player
