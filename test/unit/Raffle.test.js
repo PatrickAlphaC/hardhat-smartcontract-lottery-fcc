@@ -144,6 +144,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
               it("picks a winner, resets, and sends money", async () => {
                   const additionalEntrances = 3 // to test
                   const startingIndex = 2
+                  let startingBalance
                   for (let i = startingIndex; i < startingIndex + additionalEntrances; i++) { // i = 2; i < 5; i=i+1
                       raffle = raffleContract.connect(accounts[i]) // Returns a new instance of the Raffle contract connected to player
                       await raffle.enterRaffle({ value: raffleEntranceFee })
@@ -188,7 +189,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                       try {
                         const tx = await raffle.performUpkeep("0x")
                         const txReceipt = await tx.wait(1)
-                        const startingBalance = await accounts[2].getBalance()
+                        startingBalance = await accounts[2].getBalance()
                         await vrfCoordinatorV2Mock.fulfillRandomWords(
                             txReceipt.events[1].args.requestId,
                             raffle.address
