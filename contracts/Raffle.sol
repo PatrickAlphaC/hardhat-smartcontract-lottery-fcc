@@ -39,6 +39,7 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
     uint256 private s_lastTimeStamp;
     address private s_recentWinner;
     address payable[] private s_players;
+    mapping(address => uint256) private s_addressToValue;
     RaffleState private s_raffleState;
 
     /* Events */
@@ -74,7 +75,21 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
         if (s_raffleState != RaffleState.OPEN) {
             revert Raffle__RaffleNotOpen();
         }
-        s_players.push(payable(msg.sender));
+        /**
+         * To avoid redundancy of the addresses in the array, s_players,
+         * we check if the address has already entered the raffle before,
+         * calling enterRaffle():
+         * if true ? increment s_addressToValue[msg.sender] with the msg.value: increment msg.value && s_players
+         * Hence, we only have unique addresses as indices in our s_players array
+         */
+
+        if (s_addressToValue[msg.sender] != 0) {
+            s_addressToValue[msg.sender] += msg.value;
+        } else {
+            s_addressToValue[msg.sender] = msg.value;
+            s_players.push(payable(msg.sender));
+        }
+
         // Emit an event when we update a dynamic array or mapping
         // Named events with the function name reversed
         emit RaffleEnter(msg.sender);
