@@ -48,17 +48,27 @@ const deployRaffle: DeployFunction = async function (
         networkConfig[network.config.chainId!]["raffleEntranceFee"],
         networkConfig[network.config.chainId!]["callbackGasLimit"],
     ]
-    const raffle = await deploy("Raffle", {
+    // const raffle = await deploy("Raffle", {
+    //     from: deployer,
+    //     args: args,
+    //     log: true,
+    //     waitConfirmations: waitBlockConfirmations,
+    // })
+    const rafflefactory = await deploy("RaffleFactory", {
         from: deployer,
-        args: args,
+        // args: args,
         log: true,
         waitConfirmations: waitBlockConfirmations,
     })
-
+    
     // Verify the deployment
+    // if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
+    //     log("Verifying...")
+    //     await verify(raffle.address, args)
+    // }
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
         log("Verifying...")
-        await verify(raffle.address, args)
+        await verify(rafflefactory.address, args)
     }
 
     log("Run Price Feed contract with command:")

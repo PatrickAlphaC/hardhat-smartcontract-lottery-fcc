@@ -1,0 +1,23 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon lotterybot.ts",
+    "dev": "nodemon lotterybotgroup.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node-telegram-bot-api": "^0.61.7",
+    "ethers": "^5.5.1",
+    "mongoose": "^7.5.0",
+    "node-telegram-api": "^0.4.0",
+    "node-telegram-bot-api": "^0.61.0",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

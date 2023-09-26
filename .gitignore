@@ -1,6 +1,7 @@
 # vscode
 .vscode
-
+bot/.env
+bot/node_modules/
 # hardhat
 artifacts
 cache
