@@ -21,7 +21,7 @@ async function updateContractAddresses() {
     const contractAddresses = JSON.parse(fs.readFileSync(frontEndContractsFile, "utf8"))
     if (network.config.chainId.toString() in contractAddresses) {
         if (!contractAddresses[network.config.chainId.toString()].includes(raffle.address)) {
-            contractAddresses[network.config.chainId.toString()].push(raffle.address)
+            contractAddresses[network.config.chainId.toString()]=raffle.address
         }
     } else {
         contractAddresses[network.config.chainId.toString()] = [raffle.address]
