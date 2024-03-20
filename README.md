@@ -36,6 +36,7 @@ Checkout the full blockchain course video [here.](https://www.youtube.com/watch?
 - [Nodejs](https://nodejs.org/en/)
   - You'll know you've installed nodejs right if you can run:
     - `node --version` and get an ouput like: `vx.x.x`
+    - It'll need to be at least `18.16.0` of node 
 - [Yarn](https://yarnpkg.com/getting-started/install) instead of `npm`
   - You'll know you've installed yarn right if you can run:
     - `yarn --version` and get an output like: `x.x.x`
