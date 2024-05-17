@@ -1,4 +1,4 @@
-> **ℹ️ Important:** This repo is no longer maintained, we invite all people learning Solidtiy to switch gears to try out [Cyfrin Updraft](https://updraft.cyfrin.io/)! The 100% free #1 smart contract education platform on earth. 
+> **ℹ️ Important:** This repo is no longer maintained, we invite all people learning Solidtiy to head to [Cyfrin Updraft](https://updraft.cyfrin.io/)! The 100% free #1 smart contract education platform on earth. 
 
 # Hardhat Smartcontract Lottery (Raffle) FCC
 
