@@ -37,7 +37,7 @@ Checkout the full blockchain course video [here.](https://www.youtube.com/watch?
   - You'll know you did it right if you can run `git --version` and you see a response like `git version x.x.x`
 - [Nodejs](https://nodejs.org/en/)
   - You'll know you've installed nodejs right if you can run:
-    - `node --version` and get an ouput like: `vx.x.x`
+    - `node --version` and get an output like: `vx.x.x`
     - It'll need to be at least `18.16.0` of node 
 - [Yarn](https://yarnpkg.com/getting-started/install) instead of `npm`
   - You'll know you've installed yarn right if you can run:
@@ -85,7 +85,7 @@ yarn hardhat coverage
 
 # Deployment to a testnet or mainnet
 
-1. Setup environment variabltes
+1. Setup environment variables
 
 You'll want to set your `SEPOLIA_RPC_URL` and `PRIVATE_KEY` as environment variables. You can add them to a `.env` file, similar to what you see in `.env.example`.
 
@@ -95,7 +95,7 @@ You'll want to set your `SEPOLIA_RPC_URL` and `PRIVATE_KEY` as environment varia
 
 2. Get testnet ETH
 
-Head over to [faucets.chain.link](https://faucets.chain.link/) and get some tesnet ETH & LINK. You should see the ETH and LINK show up in your metamask. [You can read more on setting up your wallet with LINK.](https://docs.chain.link/docs/deploy-your-first-contract/#install-and-fund-your-metamask-wallet)
+Head over to [faucets.chain.link](https://faucets.chain.link/) and get some testnet ETH & LINK. You should see the ETH and LINK show up in your metamask. [You can read more on setting up your wallet with LINK.](https://docs.chain.link/docs/deploy-your-first-contract/#install-and-fund-your-metamask-wallet)
 
 3. Setup a Chainlink VRF Subscription ID
 
@@ -131,7 +131,7 @@ Go to [keepers.chain.link](https://keepers.chain.link/new) and register a new up
 
 6. Enter your raffle!
 
-You're contract is now setup to be a tamper proof autonomous verifiably random lottery. Enter the lottery by running:
+Your contract is now setup to be a tamper proof autonomous verifiably random lottery. Enter the lottery by running:
 
 ```
 yarn hardhat run scripts/enter.js --network sepolia
@@ -147,9 +147,9 @@ Then, uncomment the line `coinmarketcap: COINMARKETCAP_API_KEY,` in `hardhat.con
 
 ## Verify on etherscan
 
-If you deploy to a testnet or mainnet, you can verify it if you get an [API Key](https://etherscan.io/myapikey) from Etherscan and set it as an environemnt variable named `ETHERSCAN_API_KEY`. You can pop it into your `.env` file as seen in the `.env.example`.
+If you deploy to a testnet or mainnet, you can verify it if you get an [API Key](https://etherscan.io/myapikey) from Etherscan and set it as an environment variable named `ETHERSCAN_API_KEY`. You can pop it into your `.env` file as seen in the `.env.example`.
 
-In it's current state, if you have your api key set, it will auto verify sepolia contracts!
+In its current state, if you have your api key set, it will auto verify sepolia contracts!
 
 However, you can manual verify with:
 
